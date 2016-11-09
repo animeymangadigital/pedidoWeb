@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no" />
+    <meta name="theme-color" content="#2196F3">
+    <title>Gestor de pedidos</title>
+
+    <!-- CSS  -->
+    <link href="/static/min/plugin-min.css" type="text/css" rel="stylesheet">
+    <link href="/static/min/custom-min.css" type="text/css" rel="stylesheet">
+    <link rel="icon" href="/static/img/favicon.ico" type="image/x-icon" />
+</head>
+
+<body id="top" class="scrollspy">
+
+    <!-- Pre Loader -->
+    <div id="loader-wrapper">
+        <div id="loader"></div>
+
+        <div class="loader-section section-left"></div>
+        <div class="loader-section section-right"></div>
+
+    </div>
+
+    <!--Navigation-->
+    <div class="navbar-fixed">
+        <nav id="nav_f" class="default_color" role="navigation">
+            <div class="container">
+                <div class="nav-wrapper">
+                    <a href="/" id="logo-container" class="brand-logo hide-on-small-only">Gestion de pedidos</a>
+                    <a href="/" id="logo-container" class="brand-logo hide-on-med-and-up">Pedidos</a>
+                    <ul class="right hide-on-med-and-down">
+                        <li><a data-bind="click: function() { logout() }">salir</a></li>
+                    </ul>
+                    <ul id="nav-mobile" class="side-nav">
+                        <li><a data-bind="click: function() { logout() }">salir</a></li>
+                    </ul>
+                    <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="mdi-navigation-menu"></i></a>
+                </div>
+            </div>
+        </nav>
+    </div>
+    <div class="section scrollspy">
+        <div class="container">
+            <div class="row">
+                <div class="col l12 s12">
+                    <div class="collection with-header">
+                        <h6 class="collection-header">Ciclos</h6>
+                        <div data-bind="foreach: ciclos">
+                            <span class="collection-item">
+                              <span data-bind="text:title"></span>
+                              <a href="#!" class="secondary-content">editar</a>
+                              <a href="#!" class="secondary-content">eliminar</a>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer id="contact" class="page-footer default_color scrollspy">
+        <div class="footer-copyright default_color">
+            <div class="container">
+                Made by <a class="white-text">Xavier Sarmiento</a>. Thanks to <a class="white-text" href="http://materializecss.com/" target="_blank">materializecss</a>
+            </div>
+        </div>
+    </footer>
+
+    <!--  Scripts-->
+    <script src="/static/min/plugin-min.js"></script>
+    <script src="/static/min/custom-min.js"></script>
+    <script src="/static/min/jquery-3.1.1.min.js"></script>
+    <script src="/static/min/knockout-3.4.0.js"></script>
+    <script src="/static/app/logout.js"></script>
+    <script src="/static/app/ciclos.js"></script>
+</body>
+
+</html>

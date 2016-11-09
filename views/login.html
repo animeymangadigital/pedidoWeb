@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no" />
+    <meta name="theme-color" content="#2196F3">
+    <title>Anime y Manga Digital</title>
+
+    <!-- CSS  -->
+    <link href="/static/min/plugin-min.css" type="text/css" rel="stylesheet">
+    <link href="/static/min/custom-min.css" type="text/css" rel="stylesheet">
+    <link rel="icon" href="/static/img/favicon.ico" type="image/x-icon" />
+</head>
+
+<body id="top" class="scrollspy">
+
+    <!-- Pre Loader -->
+    <div id="loader-wrapper">
+        <div id="loader"></div>
+        <div class="loader-section section-left"></div>
+        <div class="loader-section section-right"></div>
+    </div>
+
+    <div class="section scrollspy" id="anime">
+        <div class="container">
+            <h2 class="header text_b">Login</h2>
+            <div class="row">
+                <form class="col s12">
+                    <div class="row">
+                        <div class="input-field col s7">
+                            <input id="icon_prefix" type="text" class="validate" data-bind="value: username">
+                            <label for="icon_prefix">Username</label>
+                        </div>
+                        <div class="input-field col s7">
+                            <input id="icon_telephone" type="password" class="validate" data-bind="value: password">
+                            <label for="icon_telephone">Password</label>
+                        </div>
+                    </div>
+                </form>
+                <button class="btn waves-effect waves-light" type="submit" name="action" data-bind="click: function() { login() }">
+                  ingresar
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!--  Scripts-->
+    <script src="/static/min/plugin-min.js"></script>
+    <script src="/static/min/custom-min.js"></script>
+    <script src="/static/min/jquery-3.1.1.min.js"></script>
+    <script src="/static/min/knockout-3.4.0.js"></script>
+    <script src="/static/app/login.js"></script>
+</body>
+
+</html>
