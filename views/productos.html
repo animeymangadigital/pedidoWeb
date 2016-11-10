@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no" />
+    <meta name="theme-color" content="#2196F3">
+    <title>Gestor de pedidos</title>
+
+    <!-- CSS  -->
+    <link href="/static/min/plugin-min.css" type="text/css" rel="stylesheet">
+    <link href="/static/min/custom-min.css" type="text/css" rel="stylesheet">
+    <link rel="icon" href="/static/img/favicon.ico" type="image/x-icon" />
+</head>
+
+<body id="top" class="scrollspy">
+
+    <!-- Pre Loader -->
+    <div id="loader-wrapper">
+        <div id="loader"></div>
+
+        <div class="loader-section section-left"></div>
+        <div class="loader-section section-right"></div>
+
+    </div>
+
+    <!--Navigation-->
+    <div class="navbar-fixed">
+        <nav id="nav_f" class="default_color" role="navigation">
+            <div class="container">
+                <div class="nav-wrapper">
+                    <a href="/" id="logo-container" class="brand-logo hide-on-small-only">
+                      Gestion de pedidos
+                      <img src="/static/img/loading.gif" data-bind="visible:isloading()" />
+                    </a>
+                    <a href="/" id="logo-container" class="brand-logo hide-on-med-and-up">
+                      Pedidos
+                      <img src="/static/img/loading.gif" data-bind="visible:isloading()" />
+                    </a>
+                    <ul class="right hide-on-med-and-down">
+                        <li><a data-bind="click: function() { logout() }">salir</a></li>
+                    </ul>
+                    <ul id="nav-mobile" class="side-nav">
+                        <li><a data-bind="click: function() { logout() }">salir</a></li>
+                    </ul>
+                    <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="mdi-navigation-menu"></i></a>
+                </div>
+            </div>
+        </nav>
+    </div>
+    <div class="section scrollspy">
+        <div class="container">
+            <div class="row">
+                <div class="col l12 s12" data-bind="visible:hideList()">
+                    <div class="collection with-header">
+                        <h6 class="collection-header">
+                          Productos
+                          <a class="btn-floating btn waves-effect waves-light red right-align" data-bind="click: function() { goToCreate() }">+</a>
+                        </h6>
+                        <div class="row">
+                            <div class="col s3 offset-s1">Producto</div>
+                            <div class="col s1">De7a12</div>
+                            <div class="col s1">De13a17</div>
+                            <div class="col s1">De18a49</div>
+                            <div class="col s1">Unidad</div>
+                            <div class="col s1">Tipo</div>
+                            <div class="col s1">Minuta</div>
+                            <div class="col s1">Editar</div>
+                            <div class="col s1">Eliminar</div>
+                        </div>
+                        <div class="row" data-bind="foreach: productos">
+                            <div class="col s3 offset-s1"><span data-bind="text:title"></span></div>
+                            <div class="col s1"><span data-bind="text:de7a12"></span></div>
+                            <div class="col s1"><span data-bind="text:de13a17"></span></div>
+                            <div class="col s1"><span data-bind="text:de18a49"></span></div>
+                            <div class="col s1"><span data-bind="text:unidad"></span></div>
+                            <div class="col s1"><span data-bind="text:type"></span></div>
+                            <div class="col s1"><span data-bind="text:$parent.getMinutaName(minutaId)"></span></div>
+                            <div class="col s1"><a class="btn-floating btn blue" data-bind="click: function() { $parent.goToEdit($data) }">*</a></div>
+                            <div class="col s1"><a class="btn-floating btn green" data-bind="click: function() { $parent.delete($data) }">-</a></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col l12 s12" data-bind="visible:isCreating()">
+                    <form class="col s12">
+                        <div class="row">
+                            <div class="input-field col s6">
+                                <input id="producto_name" type="text" class="validate" data-bind="value: productoName" >
+                                <label for="producto_name">Producto Name</label>
+                            </div>
+                            <div class="input-field col s6">
+                                <input id="de7a12" type="text" class="validate" data-bind="value: de7a12" >
+                                <label for="de7a12">De7a12</label>
+                            </div>
+                            <div class="input-field col s6">
+                                <input id="de13a17" type="text" class="validate" data-bind="value: de13a17" >
+                                <label for="de13a17">De13a17</label>
+                            </div>
+                            <div class="input-field col s6">
+                                <input id="de18a49" type="text" class="validate" data-bind="value: de18a49" >
+                                <label for="de18a49">De18a49</label>
+                            </div>
+                            <div class="input-field col s6">
+                                <input id="unidad" type="text" class="validate" data-bind="value: unidad" >
+                                <label for="unidad">Unidad</label>
+                            </div>
+                            <div class="input-field col s6">
+                                <input id="type" type="text" class="validate" data-bind="value: type" >
+                                <label for="type">Tipo</label>
+                            </div>
+                            <div class="input-field col s6">
+                                <input id="type" type="text" class="validate" disabled>
+                                <label for="type">Minutas</label>
+                            </div>
+                            <div class="input-field col s6" data-bind="foreach: minutas">
+                                <p>
+                                    <input name="minutas" type="radio" data-bind="attr: { id:_id,value:_id},checked: $parent.minutaId" />
+                                    <label data-bind="attr: { for:_id},text:title"></label>
+                                </p>
+                            </div>
+                        </div>
+                    </form>
+                    <button class="btn waves-effect waves-light" type="submit" name="action" data-bind="click: function() { save() }">
+                        Guardar
+                    </button>
+                    <button class="btn-flat waves-effect waves-light" type="submit" name="action" data-bind="click: function() { cancel() }">
+                        Cancelar
+                    </button>
+                </div>
+                <div class="col l12 s12" data-bind="visible:isEditing()">
+                    <form class="col s12">
+                        <div class="row">
+                            <div class="input-field col s6">
+                                <input id="producto_name" type="text" class="validate" data-bind="value: productoName" placeholder="Placeholder">
+                                <label for="producto_name">Producto Name</label>
+                            </div>
+                            <div class="input-field col s6">
+                                <input id="de7a12" type="text" class="validate" data-bind="value: de7a12" placeholder="Placeholder">
+                                <label for="de7a12">De7a12</label>
+                            </div>
+                            <div class="input-field col s6">
+                                <input id="de13a17" type="text" class="validate" data-bind="value: de13a17" placeholder="Placeholder">
+                                <label for="de13a17">De13a17</label>
+                            </div>
+                            <div class="input-field col s6">
+                                <input id="de18a49" type="text" class="validate" data-bind="value: de18a49" placeholder="Placeholder">
+                                <label for="de18a49">De18a49</label>
+                            </div>
+                            <div class="input-field col s6">
+                                <input id="unidad" type="text" class="validate" data-bind="value: unidad" placeholder="Placeholder">
+                                <label for="unidad">Unidad</label>
+                            </div>
+                            <div class="input-field col s6">
+                                <input id="type" type="text" class="validate" data-bind="value: type" placeholder="Placeholder">
+                                <label for="type">Tipo</label>
+                            </div>
+                            <div class="input-field col s6">
+                                <input id="type" type="text" class="validate" disabled>
+                                <label for="type">Minutas</label>
+                            </div>
+                            <div class="input-field col s6" data-bind="foreach: minutas">
+                                <p>
+                                    <input name="minutas" type="radio" data-bind="attr: { id:_id,value:_id},checked: $parent.minutaId" />
+                                    <label data-bind="attr: { for:_id},text:title"></label>
+                                </p>
+                            </div>
+                        </div>
+                    </form>
+                    <button class="btn waves-effect waves-light" type="submit" name="action" data-bind="click: function() { edit() }">
+                        Guardar
+                    </button>
+                    <button class="waves-effect waves-light btn-flat" type="submit" name="action" data-bind="click: function() { cancel() }">
+                        Cancelar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer id="contact" class="page-footer default_color scrollspy">
+        <div class="footer-copyright default_color">
+            <div class="container">
+                Made by <a class="white-text">Xavier Sarmiento</a>. Thanks to <a class="white-text" href="http://materializecss.com/" target="_blank">materializecss</a>
+            </div>
+        </div>
+    </footer>
+
+    <!--  Scripts-->
+    <script src="/static/min/plugin-min.js"></script>
+    <script src="/static/min/custom-min.js"></script>
+    <script src="/static/min/jquery-3.1.1.min.js"></script>
+    <script src="/static/min/knockout-3.4.0.js"></script>
+    <script src="/static/app/productos.js"></script>
+</body>
+
+</html>

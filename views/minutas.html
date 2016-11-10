@@ -29,14 +29,14 @@
         <nav id="nav_f" class="default_color" role="navigation">
             <div class="container">
                 <div class="nav-wrapper">
-                  <a href="/" id="logo-container" class="brand-logo hide-on-small-only">
-                    Gestion de pedidos
-                    <img src="/static/img/loading.gif" data-bind="visible:isloading()" />
-                  </a>
-                  <a href="/" id="logo-container" class="brand-logo hide-on-med-and-up">
-                    Pedidos
-                    <img src="/static/img/loading.gif" data-bind="visible:isloading()" />
-                  </a>
+                    <a href="/" id="logo-container" class="brand-logo hide-on-small-only">
+                      Gestion de pedidos
+                      <img src="/static/img/loading.gif" data-bind="visible:isloading()" />
+                    </a>
+                    <a href="/" id="logo-container" class="brand-logo hide-on-med-and-up">
+                      Pedidos
+                      <img src="/static/img/loading.gif" data-bind="visible:isloading()" />
+                    </a>
                     <ul class="right hide-on-med-and-down">
                         <li><a data-bind="click: function() { logout() }">salir</a></li>
                     </ul>
@@ -54,17 +54,19 @@
                 <div class="col l12 s12" data-bind="visible:hideList()">
                     <div class="collection with-header">
                         <h6 class="collection-header">
-                          Ciclos
+                          Minutas
                           <a class="btn-floating btn waves-effect waves-light red right-align" data-bind="click: function() { goToCreate() }">+</a>
                         </h6>
                         <div class="row">
-                            <div class="col s7 offset-s1">Ciclo</div>
+                            <div class="col s4 offset-s1">Minuta</div>
+                            <div class="col s3">Ciclo</div>
                             <div class="col s1">Editar</div>
                             <div class="col s1">Eliminar</div>
                         </div>
-                        <div class="row" data-bind="foreach: ciclos">
-                            <div class="col s7 offset-s1"><span data-bind="text:title"></span></div>
-                            <div class="col s1"><a  class="btn-floating btn blue" data-bind="click: function() { $parent.goToEdit($data) }">*</a></div>
+                        <div class="row" data-bind="foreach: minutas">
+                            <div class="col s4 offset-s1"><span data-bind="text:title"></span></div>
+                            <div class="col s3"><span data-bind="text:$parent.getCicloName(cicloId)"></span></div>
+                            <div class="col s1"><a class="btn-floating btn blue" data-bind="click: function() { $parent.goToEdit($data) }">*</a></div>
                             <div class="col s1"><a class="btn-floating btn green" data-bind="click: function() { $parent.delete($data) }">-</a></div>
                         </div>
                     </div>
@@ -73,8 +75,14 @@
                     <form class="col s12">
                         <div class="row">
                             <div class="input-field col s6">
-                                <input id="ciclo_name" type="text" class="validate" data-bind="value: cicloName">
-                                <label for="ciclo_name">Ciclo Name</label>
+                                <input id="minuta_name" type="text" class="validate" data-bind="value: minutaName">
+                                <label for="minuta_name">Minuta Name</label>
+                            </div>
+                            <div class="input-field col s6" data-bind="foreach: ciclos">
+                                <p>
+                                    <input name="ciclos" type="radio" data-bind="attr: { id:_id,value:_id},checked: $parent.cicloId"/>
+                                    <label data-bind="attr: { for:_id},text:title"></label>
+                                </p>
                             </div>
                         </div>
                     </form>
@@ -89,8 +97,14 @@
                     <form class="col s12">
                         <div class="row">
                             <div class="input-field col s6">
-                                <input id="ciclo_name" type="text" class="validate" data-bind="value: cicloName" placeholder="Placeholder">
-                                <label for="ciclo_name">Ciclo Name</label>
+                                <input id="minuta_name" type="text" class="validate" data-bind="value: minutaName" placeholder="Placeholder">
+                                <label for="minuta_name">Ciclo Name</label>
+                            </div>
+                            <div class="input-field col s6" data-bind="foreach: ciclos">
+                                <p>
+                                    <input name="ciclos" type="radio" data-bind="attr: { id:_id,value:_id},checked: $parent.cicloId"/>
+                                    <label data-bind="attr: { for:_id},text:title"></label>
+                                </p>
                             </div>
                         </div>
                     </form>
@@ -117,7 +131,7 @@
     <script src="/static/min/custom-min.js"></script>
     <script src="/static/min/jquery-3.1.1.min.js"></script>
     <script src="/static/min/knockout-3.4.0.js"></script>
-    <script src="/static/app/ciclos.js"></script>
+    <script src="/static/app/minutas.js"></script>
 </body>
 
 </html>
