@@ -38,6 +38,7 @@ var ViewModel = function() {
         }).done(function(res) {
             self.productos(res);
             self.showProds(true);
+            self.isloading(false);
         }).fail(function(err) {
             if (err.status === 401) {
                 window.location.href = "/login";
