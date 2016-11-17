@@ -4,6 +4,10 @@ var ViewModel = function() {
     self.productos = ko.observableArray();
     self.isloading = ko.observable(false);
     self.showProds = ko.observable(false);
+    self.showTableProds = ko.observable(false);
+    self.hideList = ko.computed(function() {
+        return !(self.showProds() || self.showTableProds() || self.isloading());
+    });
     self.de7a12 = ko.observable();
     self.de13a17 = ko.observable();
     self.de18a49 = ko.observable();
@@ -19,6 +23,19 @@ var ViewModel = function() {
     self.logout = function() {
         localStorage.removeItem("token");
         window.location.href = "/login";
+    };
+    self.prepararPedido = function() {
+       self.showTableProds(true);
+       self.showProds(false);
+    };
+    self.download = function() {
+      window.open('data:application/vnd.ms-excel,' + $('#pedidoTableGenerate').html());
+      e.preventDefault();          
+    };
+
+    self.calculateTotal = function(data) {
+      var total = (data.de7a12+data.de13a17+data.de18a49)-data.remain();
+      data.total(total < 0 ? 0 : parseFloat(total).toFixed(2));
     };
 
     self.calcular = function() {
@@ -36,7 +53,12 @@ var ViewModel = function() {
                 "Authorization": "Bearer " + self.token
             }
         }).done(function(res) {
-            self.productos(res);
+            res.forEach(function(producto) {
+                producto.remain = ko.observable();
+                producto.total = ko.observable(parseFloat(producto.de7a12+producto.de13a17+producto.de18a49).toFixed(2));
+                self.productos.push(producto);
+            });
+
             self.showProds(true);
             self.isloading(false);
         }).fail(function(err) {

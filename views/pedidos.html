@@ -63,7 +63,7 @@
                             <div class="col s1">De18a49</div>
                             <div class="col s1">Unidad</div>
                             <div class="col s1">Tipo</div>
-                            <div class="col s1">Remanente</div>
+                            <div class="col s2">existencias</div>
                             <div class="col s1">Total</div>
                         </div>
                         <div class="row" data-bind="foreach: productos">
@@ -73,29 +73,30 @@
                             <div class="col s1"><span data-bind="text:de18a49"></span></div>
                             <div class="col s1"><span data-bind="text:unidad"></span></div>
                             <div class="col s1"><span data-bind="text:type"></span></div>
-                            <div class="col s1"><span data-bind="text:remain"></span></div>
+                            <div class="col s2">
+                                <input type="number" data-bind="value:remain,event: { blur: $parent.calculateTotal.bind($data) }" />
+                            </div>
                             <div class="col s1"><span data-bind="text:total"></span></div>
                         </div>
+                        <button class="btn waves-effect waves-light" type="submit" name="action" data-bind="click: function() { prepararPedido() }">
+                            Preparar pedido
+                        </button>
                     </div>
                 </div>
-                <div class="col l12 s12" data-bind="visible:!showProds()">
+                <div class="col l12 s12" data-bind="visible:hideList()">
                     <form class="col s12">
                         <div class="row">
                             <div class="input-field col s6">
-                                <input id="de7a12" type="text" class="validate" data-bind="value: de7a12" >
+                                <input id="de7a12" type="text" class="validate" data-bind="value: de7a12">
                                 <label for="de7a12">De7a12</label>
                             </div>
                             <div class="input-field col s6">
-                                <input id="de13a17" type="text" class="validate" data-bind="value: de13a17" >
+                                <input id="de13a17" type="text" class="validate" data-bind="value: de13a17">
                                 <label for="de13a17">De13a17</label>
                             </div>
                             <div class="input-field col s6">
-                                <input id="de18a49" type="text" class="validate" data-bind="value: de18a49" >
+                                <input id="de18a49" type="text" class="validate" data-bind="value: de18a49">
                                 <label for="de18a49">De18a49</label>
-                            </div>
-                            <div class="input-field col s6">
-                                <input id="type" type="text" class="validate" disabled>
-                                <label for="type">Ciclos</label>
                             </div>
                             <div class="input-field col s6" data-bind="foreach: ciclos">
                                 <p>
@@ -107,7 +108,30 @@
                     </form>
                     <button class="btn waves-effect waves-light" type="submit" name="action" data-bind="click: function() { calcular() }">
                         Calcular
-                    </button>                    
+                    </button>
+                </div>
+                <div class="col l12 s12" data-bind="visible:showTableProds()">
+                    <div class="collection with-header">
+                        <table id="pedidoTableGenerate">
+                            <thead>
+                              <tr>
+                                  <th>Producto</th>
+                                  <th>Tipo</th>
+                                  <th>Total</th>
+                              </tr>
+                            </thead>
+                            <tbody data-bind="foreach: productos">
+                              <tr>
+                                  <td data-bind="text:title"></td>
+                                  <td data-bind="text:type"></td>
+                                  <td data-bind="text:total"></td>
+                              </tr>
+                            </tbody>
+                        </table>
+                        <button class="btn waves-effect waves-light" type="submit" name="action" data-bind="click: function() { download() }">
+                            Descargar excel
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
