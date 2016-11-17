@@ -29,12 +29,7 @@ var ViewModel = function() {
         self.showProds(false);
     };
     self.download = function() {
-        $("#pedidoTableGenerate").table2excel({
-            exclude: ".noExl",
-            name: "pedidos test",
-            filename: "pedido",
-            fileext: ".xls"
-        });
+      $('#pedidoTableGenerate').tableExport({type:'excel',escape:'false'});  
     };
 
     self.calculateTotal = function(data) {
