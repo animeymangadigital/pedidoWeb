@@ -38,7 +38,14 @@ var ViewModel = function() {
         var tabla_html = tabla_div.outerHTML.replace(/ /g, '%20');
         tmpElemento.href = data_type + ', ' + tabla_html;
         //Asignamos el nombre a nuestro EXCEL
-        tmpElemento.download = 'Nombre_De_Mi_Excel.xls';
+        var date = new Date();
+        var month = '' + (date.getMonth() + 1);
+        var day = '' + date.getDate();
+        var year = date.getFullYear();
+
+        if (month.length < 2) month = '0' + month;
+        if (day.length < 2) day = '0' + day;
+        tmpElemento.download = 'pedido-'+[day, month, year].join('-')+'.xls';
         // Simulamos el click al elemento creado para descargarlo
         tmpElemento.click();
     };
