@@ -24,12 +24,37 @@ var ViewModel = function() {
         localStorage.removeItem("token");
         window.location.href = "/login";
     };
+
+    self.getTypeName = function(type) {
+        var name = '';
+        switch (type) {
+            case "abarrotes":
+                name = 'Abarrotes';
+                break;
+            case "panaderia":
+                name = 'Panadería';
+                break;
+            case "lacteos":
+                name = 'Huevos y Lácteos';
+                break;
+            case "carnes":
+                name = 'Carnes';
+                break;
+            case "fruver":
+                name = 'Frutas y Verduras';
+                break;
+            default:
+                name = 'Otros';
+        }
+        return name;
+    };
+
     self.prepararPedido = function() {
         self.showTableProds(true);
         self.showProds(false);
     };
     self.download = function() {
-      //Creamos un Elemento Temporal en forma de enlace
+        //Creamos un Elemento Temporal en forma de enlace
         var tmpElemento = document.createElement('a');
         // obtenemos la información desde el div que lo contiene en el html
         // Obtenemos la información de la tabla
@@ -45,7 +70,7 @@ var ViewModel = function() {
 
         if (month.length < 2) month = '0' + month;
         if (day.length < 2) day = '0' + day;
-        tmpElemento.download = 'pedido-'+[day, month, year].join('-')+'.xls';
+        tmpElemento.download = 'pedido-' + [day, month, year].join('-') + '.xls';
         // Simulamos el click al elemento creado para descargarlo
         tmpElemento.click();
     };

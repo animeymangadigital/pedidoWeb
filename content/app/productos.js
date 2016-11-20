@@ -17,13 +17,37 @@ var ViewModel = function() {
     self.de18a49 = ko.observable();
     self.unidad = ko.observable();
     self.type = ko.observable();
-    self.minutaId  = ko.observable();
+    self.minutaId = ko.observable();
 
     self.init = function() {
         if (!self.token) {
             window.location.href = "/login";
         }
         getProductos();
+    };
+
+    self.getTypeName = function(type) {
+        var name = '';
+        switch (type) {
+            case "abarrotes":
+                name = 'Abarrotes';
+                break;
+            case "panaderia":
+                name = 'Panadería';
+                break;
+            case "lacteos":
+                name = 'Huevos y Lácteos';
+                break;
+            case "carnes":
+                name = 'Carnes';
+                break;
+            case "fruver":
+                name = 'Frutas y Verduras';
+                break;
+            default:
+                name = 'Otros';
+        }
+        return name;
     };
 
     self.logout = function() {
@@ -54,9 +78,9 @@ var ViewModel = function() {
         }).done(function(res) {
             getProductos();
         }).fail(function(err) {
-          if(err.status === 401){
-            window.location.href = "/login";
-          }
+            if (err.status === 401) {
+                window.location.href = "/login";
+            }
         });
     };
 
@@ -79,9 +103,9 @@ var ViewModel = function() {
             self.productos(productos[0]);
             self.cancel();
         }).fail(function(err) {
-          if(err.status === 401){
-            window.location.href = "/login";
-          }
+            if (err.status === 401) {
+                window.location.href = "/login";
+            }
         });
     }
 
@@ -97,9 +121,9 @@ var ViewModel = function() {
             }).done(function(res) {
                 getProductos();
             }).fail(function(err) {
-              if(err.status === 401){
-                window.location.href = "/login";
-              }
+                if (err.status === 401) {
+                    window.location.href = "/login";
+                }
             });
         }
     };
@@ -131,10 +155,10 @@ var ViewModel = function() {
     };
 
     self.getMinutaName = function(minutaId) {
-      var minuta = ko.utils.arrayFirst(self.minutas(), function(item) {
-          return item._id === minutaId;
-      });
-      return minuta ? minuta.title : '';
+        var minuta = ko.utils.arrayFirst(self.minutas(), function(item) {
+            return item._id === minutaId;
+        });
+        return minuta ? minuta.title : '';
     };
 
     self.edit = function() {
@@ -156,9 +180,9 @@ var ViewModel = function() {
         }).done(function(res) {
             getProductos();
         }).fail(function(err) {
-          if(err.status === 401){
-            window.location.href = "/login";
-          }
+            if (err.status === 401) {
+                window.location.href = "/login";
+            }
         });
     };
 

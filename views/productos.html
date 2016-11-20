@@ -7,7 +7,7 @@
 
     <!-- CSS  -->
     <link href="/static/min/plugin-min.css" type="text/css" rel="stylesheet">
-    <link href="/static/min/custom-min.css" type="text/css" rel="stylesheet">    
+    <link href="/static/min/custom-min.css" type="text/css" rel="stylesheet">
 </head>
 
 <body id="top" class="scrollspy">
@@ -55,23 +55,23 @@
                           <a class="btn-floating btn waves-effect waves-light red right-align" data-bind="click: function() { goToCreate() }">+</a>
                         </h6>
                         <div class="row">
-                            <div class="col s3 offset-s1">Producto</div>
+                            <div class="col s2 offset-s1">Producto</div>
                             <div class="col s1">De7a12</div>
                             <div class="col s1">De13a17</div>
                             <div class="col s1">De18a49</div>
                             <div class="col s1">Unidad</div>
-                            <div class="col s1">Tipo</div>
+                            <div class="col s2">Tipo</div>
                             <div class="col s1">Minuta</div>
                             <div class="col s1">Editar</div>
                             <div class="col s1">Eliminar</div>
                         </div>
                         <div class="row" data-bind="foreach: productos">
-                            <div class="col s3 offset-s1"><span data-bind="text:title"></span></div>
+                            <div class="col s2 offset-s1"><span data-bind="text:title"></span></div>
                             <div class="col s1"><span data-bind="text:de7a12"></span></div>
                             <div class="col s1"><span data-bind="text:de13a17"></span></div>
                             <div class="col s1"><span data-bind="text:de18a49"></span></div>
                             <div class="col s1"><span data-bind="text:unidad"></span></div>
-                            <div class="col s1"><span data-bind="text:type"></span></div>
+                            <div class="col s2"><span data-bind="text:$parent.getTypeName(type)"></span></div>
                             <div class="col s1"><span data-bind="text:$parent.getMinutaName(minutaId)"></span></div>
                             <div class="col s1"><a class="btn-floating btn blue" data-bind="click: function() { $parent.goToEdit($data) }">*</a></div>
                             <div class="col s1"><a class="btn-floating btn green" data-bind="click: function() { $parent.delete($data) }">-</a></div>
