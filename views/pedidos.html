@@ -114,7 +114,6 @@
                             <thead>
                                 <tr>
                                     <th>Producto</th>
-                                    <th>Tipo</th>
                                     <th>Total</th>
                                 </tr>
                             </thead>
@@ -128,7 +127,6 @@
                                     <!-- ko if: type ==="abarrotes" -->
                                     <tr>
                                         <td data-bind="text:title"></td>
-                                        <td data-bind="text:type"></td>
                                         <td data-bind='text:total() +" "+ unidad'></td>
                                     </tr>
                                     <!-- /ko -->
@@ -142,7 +140,6 @@
                                     <!-- ko if: type ==="panaderia" -->
                                     <tr>
                                         <td data-bind="text:title"></td>
-                                        <td data-bind="text:type"></td>
                                         <td data-bind='text:total() +" "+ unidad'></td>
                                     </tr>
                                     <!-- /ko -->
@@ -156,7 +153,6 @@
                                     <!-- ko if: type ==="lacteos" -->
                                     <tr>
                                         <td data-bind="text:title"></td>
-                                        <td data-bind="text:type"></td>
                                         <td data-bind='text:total() +" "+ unidad'></td>
                                     </tr>
                                     <!-- /ko -->
@@ -170,7 +166,6 @@
                                     <!-- ko if: type ==="carnes" -->
                                     <tr>
                                         <td data-bind="text:title"></td>
-                                        <td data-bind="text:type"></td>
                                         <td data-bind='text:total() +" "+ unidad'></td>
                                     </tr>
                                     <!-- /ko -->
@@ -183,8 +178,7 @@
                                 <tbody data-bind="foreach: productos">
                                     <!-- ko if: type ==="fruver" -->
                                     <tr>
-                                        <td data-bind="text:title"></td>
-                                        <td data-bind="text:type"></td>
+                                        <td data-bind="text:title"></td>                                        
                                         <td data-bind='text:total() +" "+ unidad'></td>
                                     </tr>
                                     <!-- /ko -->
