@@ -25,30 +25,6 @@ var ViewModel = function() {
         window.location.href = "/login";
     };
 
-    self.getTypeName = function(type) {
-        var name = '';
-        switch (type) {
-            case "abarrotes":
-                name = 'Abarrotes';
-                break;
-            case "panaderia":
-                name = 'Panadería';
-                break;
-            case "lacteos":
-                name = 'Huevos y Lácteos';
-                break;
-            case "carnes":
-                name = 'Carnes';
-                break;
-            case "fruver":
-                name = 'Frutas y Verduras';
-                break;
-            default:
-                name = 'Otros';
-        }
-        return name;
-    };
-
     self.prepararPedido = function() {
         self.showTableProds(true);
         self.showProds(false);
@@ -76,7 +52,8 @@ var ViewModel = function() {
     };
 
     self.calculateTotal = function(data) {
-        var total = (data.de7a12 + data.de13a17 + data.de18a49) - data.remain();
+        var reamin = data.remain() === undefined ? 0 : data.remain();
+        var total = (data.de7a12 + data.de13a17 + data.de18a49) - parseFloat(reamin).toFixed(2);
         data.total(total < 0 ? 0 : parseFloat(total).toFixed(2));
     };
 
@@ -95,7 +72,17 @@ var ViewModel = function() {
                 "Authorization": "Bearer " + self.token
             }
         }).done(function(res) {
-            res.forEach(function(producto) {
+
+            res.sort(function(a, b) {
+                if (a.title > b.title) {
+                    return 1;
+                }
+                if (a.title < b.title) {
+                    return -1;
+                }
+                // a must be equal to b
+                return 0;
+            }).forEach(function(producto) {
                 producto.remain = ko.observable();
                 producto.total = ko.observable(parseFloat(producto.de7a12 + producto.de13a17 + producto.de18a49).toFixed(2));
                 self.productos.push(producto);
