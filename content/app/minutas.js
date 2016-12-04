@@ -2,16 +2,17 @@ var ViewModel = function() {
     var self = this;
     self.minutas = ko.observableArray();
     self.ciclos = ko.observableArray();
-    self.isCreating = ko.observable(false);
     self.isEditing = ko.observable(false);
     self.isloading = ko.observable(false);
     self.minutaName = ko.observable();
     self.minutaId = ko.observable();
     self.cicloId = ko.observable();
     self.token = localStorage.getItem("token");
-    self.hideList = ko.computed(function() {
-        return !(self.isCreating() || self.isEditing() || self.isloading());
+
+    self.formActionName = ko.computed(function() {
+        return  self.isEditing() === true ? 'Editar Minuta' : 'Agregar Minuta' ;
     });
+
     self.init = function() {
         if (!self.token) {
             window.location.href = "/login";
@@ -24,11 +25,12 @@ var ViewModel = function() {
         window.location.href = "/login";
     };
 
-    self.goToCreate = function() {
-        self.isCreating(true);
-    };
-
     self.save = function() {
+        if(!self.minutaName() || !self.cicloId()){
+            alert('No se puede crear una minuta sin que le llenes el nombre o escojas un ciclo');
+            return;
+        }
+
         return $.ajax({
             type: 'POST',
             url: 'https://orderfoodciclos.herokuapp.com/minutas',
@@ -66,6 +68,7 @@ var ViewModel = function() {
             self.minutas(minutas[0]);
             self.ciclos(ciclos[0]);
             self.cancel();
+            $("[rel='tooltip']").tooltip();
         }).fail(function(err) {
           if(err.status === 401){
             window.location.href = "/login";
@@ -93,10 +96,19 @@ var ViewModel = function() {
     };
 
     self.cancel = function() {
-        self.isCreating(false);
         self.isEditing(false);
         self.isloading(false);
-        self.minutaName('');
+        self.minutaId(null);
+        self.minutaName(null);
+        self.cicloId(null);
+    };
+
+    self.goToSave = function() {
+       if(self.isEditing()){
+         self.edit();
+       }else{
+         self.save();
+       }
     };
 
     self.goToEdit = function(data) {
@@ -114,6 +126,10 @@ var ViewModel = function() {
     };
 
     self.edit = function() {
+        if(!self.minutaName() || !self.cicloId()){
+            alert('No se puede crear una minuta sin que le llenes el nombre o escojas un ciclo');
+            return;
+        }
         return $.ajax({
             type: 'PUT',
             url: 'https://orderfoodciclos.herokuapp.com/minutas/' + self.minutaId(),

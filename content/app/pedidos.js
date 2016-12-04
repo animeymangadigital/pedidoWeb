@@ -12,6 +12,9 @@ var ViewModel = function() {
     self.de13a17 = ko.observable();
     self.de18a49 = ko.observable();
     self.cicloId = ko.observable();
+
+    self.pedidoName = ko.observable();
+
     self.token = localStorage.getItem("token");
     self.init = function() {
         if (!self.token) {
@@ -25,33 +28,19 @@ var ViewModel = function() {
         window.location.href = "/login";
     };
 
-    self.getTypeName = function(type) {
-        var name = '';
-        switch (type) {
-            case "abarrotes":
-                name = 'Abarrotes';
-                break;
-            case "panaderia":
-                name = 'Panadería';
-                break;
-            case "lacteos":
-                name = 'Huevos y Lácteos';
-                break;
-            case "carnes":
-                name = 'Carnes';
-                break;
-            case "fruver":
-                name = 'Frutas y Verduras';
-                break;
-            default:
-                name = 'Otros';
-        }
-        return name;
-    };
-
     self.prepararPedido = function() {
         self.showTableProds(true);
         self.showProds(false);
+
+        var monthNames = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
+                          "Julio", "Agosto", "Septiembre", "Octobre", "Noviembre", "Diciembre"];
+
+        var date = new Date();
+        var month = monthNames[date.getMonth()];
+        var day = date.getDate();
+        var year = date.getFullYear();
+        console.log('Pedido del ' + day + ' Al ' + (day + 7) + ' De ' + month + 'Del' + year);
+        self.pedidoName('Pedido del ' + day + ' Al ' + (day + 7) + ' De ' + month + ' Del ' + year);
     };
     self.download = function() {
         //Creamos un Elemento Temporal en forma de enlace
@@ -76,8 +65,16 @@ var ViewModel = function() {
     };
 
     self.calculateTotal = function(data) {
-        var total = (data.de7a12 + data.de13a17 + data.de18a49) - data.remain();
+        var reamin = data.remain() === undefined ? 0 : data.remain();
+        var total = (data.de7a12 + data.de13a17 + data.de18a49) - parseFloat(reamin).toFixed(2);
         data.total(total < 0 ? 0 : parseFloat(total).toFixed(2));
+    };
+
+    self.cancel = function() {
+      self.de7a12(null);
+      self.de13a17(null);
+      self.de18a49(null);
+      self.cicloId(null);
     };
 
     self.calcular = function() {
@@ -86,7 +83,7 @@ var ViewModel = function() {
             type: 'POST',
             url: 'https://orderfoodciclos.herokuapp.com/pedidos',
             data: {
-                de7a12 : self.de7a12(),
+                de7a12 : self.de7a12(),
                 de13a17: self.de13a17(),
                 de18a49: self.de18a49(),
                 cicloId: self.cicloId(),
@@ -95,7 +92,17 @@ var ViewModel = function() {
                 "Authorization": "Bearer " + self.token
             }
         }).done(function(res) {
-            res.forEach(function(producto) {
+
+            res.sort(function(a, b) {
+                if (a.title > b.title) {
+                    return 1;
+                }
+                if (a.title < b.title) {
+                    return -1;
+                }
+                // a must be equal to b
+                return 0;
+            }).forEach(function(producto) {
                 producto.remain = ko.observable();
                 producto.total = ko.observable(parseFloat(producto.de7a12 + producto.de13a17 + producto.de18a49).toFixed(2));
                 self.productos.push(producto);
@@ -132,4 +139,4 @@ var ViewModel = function() {
 
 $(document).ready(function() {
     ko.applyBindings(new ViewModel());
-})
+});
