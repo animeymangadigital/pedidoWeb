@@ -1,15 +1,15 @@
 var ViewModel = function() {
     var self = this;
     self.ciclos = ko.observableArray();
-    self.isCreating = ko.observable(false);
     self.isEditing = ko.observable(false);
     self.isloading = ko.observable(false);
     self.cicloName = ko.observable();
     self.cicloId = ko.observable();
     self.token = localStorage.getItem("token");
-    self.hideList = ko.computed(function() {
-        return !(self.isCreating() || self.isEditing() || self.isloading());
+    self.formActionName = ko.computed(function() {
+        return  self.isEditing() === true ? 'Editar Ciclo' : 'Agregar Ciclo' ;
     });
+
     self.init = function() {
         if (!self.token) {
             window.location.href = "/login";
@@ -22,11 +22,11 @@ var ViewModel = function() {
        window.location.href = "/login";
     };
 
-    self.goToCreate = function() {
-       self.isCreating(true);
-    };
-
     self.save = function() {
+      if(!self.cicloName()){
+          alert('No se puede crear un ciclo sin que le llenes el nombre');
+          return;
+      }
       return $.ajax({
           type: 'POST',
           url: 'https://orderfoodciclos.herokuapp.com/ciclos',
@@ -54,6 +54,7 @@ var ViewModel = function() {
       }).done(function(res) {
           self.ciclos(res);
           self.cancel();
+          $("[rel='tooltip']").tooltip();
       }).fail(function(err) {
         if(err.status === 401){
           window.location.href = "/login";
@@ -81,10 +82,10 @@ var ViewModel = function() {
     };
 
     self.cancel = function() {
-      self.isCreating(false);
       self.isEditing(false);
       self.isloading(false);
-      self.cicloName('');
+      self.cicloName(null);
+      self.cicloId(null);
     };
 
     self.goToEdit = function(data) {
@@ -93,7 +94,19 @@ var ViewModel = function() {
        self.cicloName(data.title);
     };
 
+    self.goToSave = function() {
+       if(self.isEditing()){
+         self.edit();
+       }else{
+         self.save();
+       }
+    };
+
     self.edit = function() {
+      if(!self.cicloName()){
+          alert('No se puede crear un ciclo sin que le llenes el nombre');
+          return;
+      }
       return $.ajax({
           type: 'PUT',
           url: 'https://orderfoodciclos.herokuapp.com/ciclos/' + self.cicloId(),

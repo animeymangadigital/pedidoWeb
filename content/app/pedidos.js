@@ -12,6 +12,9 @@ var ViewModel = function() {
     self.de13a17 = ko.observable();
     self.de18a49 = ko.observable();
     self.cicloId = ko.observable();
+
+    self.pedidoName = ko.observable();
+
     self.token = localStorage.getItem("token");
     self.init = function() {
         if (!self.token) {
@@ -28,6 +31,16 @@ var ViewModel = function() {
     self.prepararPedido = function() {
         self.showTableProds(true);
         self.showProds(false);
+
+        var monthNames = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
+                          "Julio", "Agosto", "Septiembre", "Octobre", "Noviembre", "Diciembre"];
+
+        var date = new Date();
+        var month = monthNames[date.getMonth()];
+        var day = date.getDate();
+        var year = date.getFullYear();
+        console.log('Pedido del ' + day + ' Al ' + (day + 7) + ' De ' + month + 'Del' + year);
+        self.pedidoName('Pedido del ' + day + ' Al ' + (day + 7) + ' De ' + month + ' Del ' + year);
     };
     self.download = function() {
         //Creamos un Elemento Temporal en forma de enlace
@@ -57,13 +70,20 @@ var ViewModel = function() {
         data.total(total < 0 ? 0 : parseFloat(total).toFixed(2));
     };
 
+    self.cancel = function() {
+      self.de7a12(null);
+      self.de13a17(null);
+      self.de18a49(null);
+      self.cicloId(null);
+    };
+
     self.calcular = function() {
         self.isloading(true);
         return $.ajax({
             type: 'POST',
             url: 'https://orderfoodciclos.herokuapp.com/pedidos',
             data: {
-                de7a12 : self.de7a12(),
+                de7a12 : self.de7a12(),
                 de13a17: self.de13a17(),
                 de18a49: self.de18a49(),
                 cicloId: self.cicloId(),
@@ -119,4 +139,4 @@ var ViewModel = function() {
 
 $(document).ready(function() {
     ko.applyBindings(new ViewModel());
-})
+});

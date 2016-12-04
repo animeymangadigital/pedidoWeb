@@ -2,12 +2,15 @@ var ViewModel = function() {
     var self = this;
     self.minutas = ko.observableArray();
     self.productos = ko.observableArray();
-    self.isCreating = ko.observable(false);
     self.isEditing = ko.observable(false);
     self.isloading = ko.observable(false);
     self.token = localStorage.getItem("token");
-    self.hideList = ko.computed(function() {
-        return !(self.isCreating() || self.isEditing() || self.isloading());
+
+    self.pageSize = ko.observable(10);
+    self.pageIndex = ko.observable(0);
+
+    self.formActionName = ko.computed(function() {
+        return  self.isEditing() === true ? 'Editar Producto' : 'Agregar Producto' ;
     });
 
     self.productoId = ko.observable();
@@ -55,11 +58,25 @@ var ViewModel = function() {
         window.location.href = "/login";
     };
 
-    self.goToCreate = function() {
-        self.isCreating(true);
+    self.goToSave = function() {
+       if(self.isEditing()){
+         self.edit();
+       }else{
+         self.save();
+       }
     };
 
     self.save = function() {
+       if(!self.productoName() ||
+       !self.de7a12() ||
+       !self.de13a17()||
+       !self.de18a49()||
+       !self.unidad()||
+       !self.type()|| !self.minutaId()){
+         alert('Todos los campos debes llenarlos');
+         return;
+       }
+
         return $.ajax({
             type: 'POST',
             url: 'https://orderfoodciclos.herokuapp.com/productos',
@@ -129,17 +146,16 @@ var ViewModel = function() {
     };
 
     self.cancel = function() {
-        self.isCreating(false);
         self.isEditing(false);
         self.isloading(false);
-        self.productoId('');
-        self.productoName('');
-        self.de7a12('');
-        self.de13a17('');
-        self.de18a49('');
-        self.unidad('');
-        self.type('');
-        self.minutaId('');
+        self.productoId(null);
+        self.productoName(null);
+        self.de7a12(null);
+        self.de13a17(null);
+        self.de18a49(null);
+        self.unidad(null);
+        self.type(null);
+        self.minutaId(null);
     };
 
     self.goToEdit = function(data) {
@@ -162,6 +178,15 @@ var ViewModel = function() {
     };
 
     self.edit = function() {
+      if(!self.productoName() ||
+      !self.de7a12() ||
+      !self.de13a17()||
+      !self.de18a49()||
+      !self.unidad()||
+      !self.type()|| !self.minutaId()){
+        alert('Todos los campos debes llenarlos');
+        return;
+      }
         return $.ajax({
             type: 'PUT',
             url: 'https://orderfoodciclos.herokuapp.com/productos/' + self.productoId(),
@@ -184,6 +209,33 @@ var ViewModel = function() {
                 window.location.href = "/login";
             }
         });
+    };
+
+    self.pagedList = ko.dependentObservable(function () {
+        var size = self.pageSize();
+        var start = self.pageIndex() * size;
+        $("[rel='tooltip']").tooltip();
+        return self.productos.slice(start, start + size);
+    });
+
+    self.maxPageIndex = ko.dependentObservable(function () {
+        return Math.ceil(self.productos().length/self.pageSize())-1;
+    });
+
+    self.previousPage = function () {
+        if (self.pageIndex() > 0) {
+            self.pageIndex(self.pageIndex() - 1);
+        }
+    };
+
+    self.nextPage = function () {
+        if (self.pageIndex() < self.maxPageIndex()) {
+            self.pageIndex(self.pageIndex() + 1);
+        }
+    };
+
+    self.moveToPage = function (index) {
+        self.pageIndex(index);
     };
 
     self.init();

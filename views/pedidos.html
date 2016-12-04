@@ -1,281 +1,513 @@
-<html>
+<!doctype html>
+<html lang="en">
 
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no" />
-    <meta name="theme-color" content="#2196F3">
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/png" href="assets/img/favicon.ico">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+
     <title>Gestor de pedidos</title>
 
-    <!-- CSS  -->
-    <link href="/static/min/plugin-min.css" type="text/css" rel="stylesheet">
-    <link href="/static/min/custom-min.css" type="text/css" rel="stylesheet">
+    <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
+    <meta name="viewport" content="width=device-width" />
+
+
+    <!-- Bootstrap core CSS     -->
+    <link href="/static/css/bootstrap.min.css" rel="stylesheet" />
+
+    <!-- Animation library for notifications   -->
+    <link href="/static/css/animate.min.css" rel="stylesheet" />
+
+    <!--  Light Bootstrap Table core CSS    -->
+    <link href="/static/css/light-bootstrap-dashboard.css" rel="stylesheet" />
+
+
+    <!--  CSS for Demo Purpose, don't include it in your project     -->
+    <link href="/static/css/demo.css" rel="stylesheet" />
+
+
+    <!--     Fonts and icons     -->
+    <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href='http://fonts.googleapis.com/css?family=Roboto:400,700,300' rel='stylesheet' type='text/css'>
+    <link href="/static/css/pe-icon-7-stroke.css" rel="stylesheet" />
+
 </head>
 
-<body id="top" class="scrollspy">
+<body>
 
-    <!-- Pre Loader -->
-    <div id="loader-wrapper">
-        <div id="loader"></div>
+    <div class="wrapper">
+        <div class="sidebar" data-color="purple" data-image="/static/img/sidebar-5.jpg">
 
-        <div class="loader-section section-left"></div>
-        <div class="loader-section section-right"></div>
-
-    </div>
-
-    <!--Navigation-->
-    <div class="navbar-fixed">
-        <nav id="nav_f" class="default_color" role="navigation">
-            <div class="container">
-                <div class="nav-wrapper">
-                    <a href="/" id="logo-container" class="brand-logo hide-on-small-only">
-                      Gestion de pedidos
-                      <img src="/static/img/loading.gif" data-bind="visible:isloading()" />
-                    </a>
-                    <a href="/" id="logo-container" class="brand-logo hide-on-med-and-up">
-                      Pedidos
-                      <img src="/static/img/loading.gif" data-bind="visible:isloading()" />
-                    </a>
-                    <ul class="right hide-on-med-and-down">
-                        <li><a data-bind="click: function() { logout() }">salir</a></li>
-                    </ul>
-                    <ul id="nav-mobile" class="side-nav">
-                        <li><a data-bind="click: function() { logout() }">salir</a></li>
-                    </ul>
-                    <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="mdi-navigation-menu"></i></a>
+            <div class="sidebar-wrapper">
+                <div class="logo">
+                    <a href="/" class="simple-text">
+                    Gestor de pedidos
+                </a>
                 </div>
+
+                <ul class="nav">
+                    <li>
+                        <a href="/">
+                            <i class="pe-7s-home"></i>
+                            <p>Inicio</p>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/ciclos">
+                            <i class="pe-7s-graph3"></i>
+                            <p>Ciclos</p>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/minutas">
+                            <i class="pe-7s-note2"></i>
+                            <p>Minutas</p>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/productos">
+                            <i class="pe-7s-cart"></i>
+                            <p>Productos</p>
+                        </a>
+                    </li>
+                    <li class="active">
+                        <a href="/pedidos">
+                            <i class="pe-7s-calculator"></i>
+                            <p>Generar Pedidos</p>
+                        </a>
+                    </li>
+                </ul>
             </div>
-        </nav>
-    </div>
-    <div class="section scrollspy">
-        <div class="container">
-            <div class="row">
-                <div class="col l12 s12" data-bind="visible:showProds()">
-                    <div class="collection with-header">
-                        <h6 class="collection-header">
-                          Generador de pedidos
-                        </h6>
-                        <table id="pedidoTableGenerate">
-                            <thead>
-                                <tr>
-                                    <th>Producto</th>
-                                    <th>Existencias</th>
-                                    <th>Total</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <thead>
-                                    <tr>
-                                        <th colspan="3">Abarrotes</th>
-                                    </tr>
-                                </thead>
-                                <tbody data-bind="foreach: productos">
-                                    <!-- ko if: type ==="abarrotes" -->
-                                    <tr>
-                                        <td data-bind="text:title"></td>
-                                        <td>
-                                            <input type="number" data-bind="value:remain,event: { blur: $parent.calculateTotal.bind($data) }" />
-                                        </td>
-                                        <td data-bind='text:total() +" "+ unidad'></td>
-                                    </tr>
-                                    <!-- /ko -->
-                                </tbody>
-                                <thead>
-                                    <tr>
-                                        <th colspan="3">Panadería</th>
-                                    </tr>
-                                </thead>
-                                <tbody data-bind="foreach: productos">
-                                    <!-- ko if: type ==="panaderia" -->
-                                    <tr>
-                                        <td data-bind="text:title"></td>
-                                        <td>
-                                            <input type="number" data-bind="value:remain,event: { blur: $parent.calculateTotal.bind($data) }" />
-                                        </td>
-                                        <td data-bind='text:total() +" "+ unidad'></td>
-                                    </tr>
-                                    <!-- /ko -->
-                                </tbody>
-                                <thead>
-                                    <tr>
-                                        <th colspan="3">Huevos y Lácteos</th>
-                                    </tr>
-                                </thead>
-                                <tbody data-bind="foreach: productos">
-                                    <!-- ko if: type ==="lacteos" -->
-                                    <tr>
-                                        <td data-bind="text:title"></td>
-                                        <td>
-                                            <input type="number" data-bind="value:remain,event: { blur: $parent.calculateTotal.bind($data) }" />
-                                        </td>
-                                        <td data-bind='text:total() +" "+ unidad'></td>
-                                    </tr>
-                                    <!-- /ko -->
-                                </tbody>
-                                <thead>
-                                    <tr>
-                                        <th colspan="3">Carnes</th>
-                                    </tr>
-                                </thead>
-                                <tbody data-bind="foreach: productos">
-                                    <!-- ko if: type ==="carnes" -->
-                                    <tr>
-                                        <td data-bind="text:title"></td>
-                                        <td>
-                                            <input type="number" data-bind="value:remain,event: { blur: $parent.calculateTotal.bind($data) }" />
-                                        </td>
-                                        <td data-bind='text:total() +" "+ unidad'></td>
-                                    </tr>
-                                    <!-- /ko -->
-                                </tbody>
-                                <thead>
-                                    <tr>
-                                        <th colspan="3">Frutas y Verduras</th>
-                                    </tr>
-                                </thead>
-                                <tbody data-bind="foreach: productos">
-                                    <!-- ko if: type ==="fruver" -->
-                                    <tr>
-                                        <td data-bind="text:title"></td>
-                                        <td>
-                                            <input type="number" data-bind="value:remain,event: { blur: $parent.calculateTotal.bind($data) }" />
-                                        </td>
-                                        <td data-bind='text:total() +" "+ unidad'></td>
-                                    </tr>
-                                    <!-- /ko -->
-                                </tbody>
-                            </tbody>
-                        </table>
-                        <button class="btn waves-effect waves-light" type="submit" name="action" data-bind="click: function() { prepararPedido() }">
-                            Preparar pedido
+        </div>
+
+        <div class="main-panel">
+            <nav class="navbar navbar-default navbar-fixed">
+                <div class="container-fluid">
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navigation-example-2">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
                         </button>
+                        <a class="navbar-brand" href="/">Gestor de pedidos - Pedidos</a>
+                    </div>
+                    <div class="collapse navbar-collapse">
+                        <ul class="nav navbar-nav navbar-right">
+                            <li>
+                                <a href="">
+                               Xavier Sarmiento
+                            </a>
+                            </li>
+                            <li>
+                                <a href="#" data-bind="click: function() { logout() }">
+                                Salir
+                            </a>
+                            </li>
+                        </ul>
                     </div>
                 </div>
-                <div class="col l12 s12" data-bind="visible:hideList()">
-                    <form class="col s12">
-                        <div class="row">
-                            <div class="input-field col s6">
-                                <input id="de7a12" type="text" class="validate" data-bind="value: de7a12">
-                                <label for="de7a12">De7a12</label>
-                            </div>
-                            <div class="input-field col s6">
-                                <input id="de13a17" type="text" class="validate" data-bind="value: de13a17">
-                                <label for="de13a17">De13a17</label>
-                            </div>
-                            <div class="input-field col s6">
-                                <input id="de18a49" type="text" class="validate" data-bind="value: de18a49">
-                                <label for="de18a49">De18a49</label>
-                            </div>
-                            <div class="input-field col s6" data-bind="foreach: ciclos">
-                                <p>
-                                    <input name="ciclos" type="radio" data-bind="attr: { id:_id,value:_id},checked: $parent.cicloId" />
-                                    <label data-bind="attr: { for:_id},text:title"></label>
-                                </p>
+            </nav>
+
+            <div class="content">
+                <div class="container-fluid">
+                    <div class="row" data-bind="visible:hideList()">
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="header">
+                                    <h4 class="title">
+                                    <span> Calcular cantidades de los productos</span>
+                                  </h4>
+                                </div>
+                                <div class="content">
+                                    <form>
+                                        <div class="row">
+                                            <div class="col-md-7">
+                                                <div class="form-group">
+                                                    <label>De7a12</label>
+                                                    <input type="number" class="form-control" data-bind="value:de7a12">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label>De13a17</label>
+                                                    <input type="number" class="form-control" data-bind="value:de13a17">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label>De18a49</label>
+                                                    <input type="number" class="form-control" data-bind="value:de18a49">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label>Ciclo para el cual se van a calcular la cantidades</label>
+                                                    <select class="form-control" id="sel1" name="ciclo" data-bind="options: ciclos, optionsText: 'title', optionsValue: '_id', value: cicloId, optionsCaption: 'Selecciona un ciclo'"></select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <button type="submit" class="btn btn-info btn-fill" data-bind="click: function() { calcular() }">Calcular</button>
+                                        <button type="submit" class="btn btn-default btn-fill" data-bind="click: function() { cancel() }">Cancelar</button>
+                                        <div class="clearfix"></div>
+                                    </form>
+                                </div>
                             </div>
                         </div>
-                    </form>
-                    <button class="btn waves-effect waves-light" type="submit" name="action" data-bind="click: function() { calcular() }">
-                        Calcular
-                    </button>
-                </div>
-                <div class="col l12 s12" data-bind="visible:showTableProds()">
-                    <div class="collection with-header">
-                        <table id="pedidoTableGenerate">
-                            <thead>
-                                <tr>
-                                    <th>Producto</th>
-                                    <th>Total</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <thead>
-                                    <tr>
-                                        <th colspan="3">Abarrotes</th>
-                                    </tr>
-                                </thead>
-                                <tbody data-bind="foreach: productos">
-                                    <!-- ko if: type ==="abarrotes" -->
-                                    <tr>
-                                        <td data-bind="text:title"></td>
-                                        <td data-bind='text:total() +" "+ unidad'></td>
-                                    </tr>
-                                    <!-- /ko -->
-                                </tbody>
-                                <thead>
-                                    <tr>
-                                        <th colspan="3">Panadería</th>
-                                    </tr>
-                                </thead>
-                                <tbody data-bind="foreach: productos">
-                                    <!-- ko if: type ==="panaderia" -->
-                                    <tr>
-                                        <td data-bind="text:title"></td>
-                                        <td data-bind='text:total() +" "+ unidad'></td>
-                                    </tr>
-                                    <!-- /ko -->
-                                </tbody>
-                                <thead>
-                                    <tr>
-                                        <th colspan="3">Huevos y Lácteos</th>
-                                    </tr>
-                                </thead>
-                                <tbody data-bind="foreach: productos">
-                                    <!-- ko if: type ==="lacteos" -->
-                                    <tr>
-                                        <td data-bind="text:title"></td>
-                                        <td data-bind='text:total() +" "+ unidad'></td>
-                                    </tr>
-                                    <!-- /ko -->
-                                </tbody>
-                                <thead>
-                                    <tr>
-                                        <th colspan="3">Carnes</th>
-                                    </tr>
-                                </thead>
-                                <tbody data-bind="foreach: productos">
-                                    <!-- ko if: type ==="carnes" -->
-                                    <tr>
-                                        <td data-bind="text:title"></td>
-                                        <td data-bind='text:total() +" "+ unidad'></td>
-                                    </tr>
-                                    <!-- /ko -->
-                                </tbody>
-                                <thead>
-                                    <tr>
-                                        <th colspan="3">Frutas y Verduras</th>
-                                    </tr>
-                                </thead>
-                                <tbody data-bind="foreach: productos">
-                                    <!-- ko if: type ==="fruver" -->
-                                    <tr>
-                                        <td data-bind="text:title"></td>
-                                        <td data-bind='text:total() +" "+ unidad'></td>
-                                    </tr>
-                                    <!-- /ko -->
-                                </tbody>
-                            </tbody>
-                        </table>
-                        <button class="btn waves-effect waves-light" type="submit" name="action" data-bind="click: function() { download() }">
-                            Descargar excel
-                        </button>
+                        <div class="col-md-6">
+                            <div class="card ">
+                                <div class="header">
+                                    <h4 class="title">Pedidos generados</h4>
+                                </div>
+                                <div class="content">
+                                    <div class="table-full-width">
+                                        <table class="table">
+                                            <tbody>
+                                                <tr>
+                                                    <td>Pedido del 28/11/2016</td>
+                                                    <td class="td-actions text-right">
+                                                        <button type="button" rel="tooltip" title="Volver a generar" class="btn btn-info btn-simple ">
+                                                            <i class="fa fa-edit"></i>
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Pedido del 27/11/2016</td>
+                                                    <td class="td-actions text-right">
+                                                        <button type="button" rel="tooltip" title="Volver a generar" class="btn btn-info btn-simple ">
+                                                            <i class="fa fa-edit"></i>
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Pedido del 26/11/2016</td>
+                                                    <td class="td-actions text-right">
+                                                        <button type="button" rel="tooltip" title="Volver a generar" class="btn btn-info btn-simple ">
+                                                            <i class="fa fa-edit"></i>
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Pedido del 25/11/2016</td>
+                                                    <td class="td-actions text-right">
+                                                        <button type="button" rel="tooltip" title="Volver a generar" class="btn btn-info btn-simple ">
+                                                            <i class="fa fa-edit"></i>
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Pedido del 24/11/2016</td>
+                                                    <td class="td-actions text-right">
+                                                        <button type="button" rel="tooltip" title="Volver a generar" class="btn btn-info btn-simple ">
+                                                            <i class="fa fa-edit"></i>
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Pedido del 24/11/2016</td>
+                                                    <td class="td-actions text-right">
+                                                        <button type="button" rel="tooltip" title="Volver a generar" class="btn btn-info btn-simple ">
+                                                            <i class="fa fa-edit"></i>
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" data-bind="visible:showProds()">
+                        <div class="col-md-12">
+                            <div class="card ">
+                                <div class="header">
+                                    <h4 class="title">Generador de Pedidos - descontar productos existentes</h4>
+                                </div>
+                                <div class="content">
+                                    <div class="table-full-width">
+                                        <table class="table">
+                                            <thead>
+                                                <tr>
+                                                    <th>Producto</th>
+                                                    <th>Existencias</th>
+                                                    <th>Total</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <thead>
+                                                    <tr>
+                                                        <th colspan="3">Abarrotes</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody data-bind="foreach: productos">
+                                                    <!-- ko if: type ==="abarrotes" -->
+                                                    <tr>
+                                                        <td data-bind="text:title"></td>
+                                                        <td>
+                                                            <input type="number" data-bind="value:remain,event: { blur: $parent.calculateTotal.bind($data) }" />
+                                                        </td>
+                                                        <td data-bind='text:total() +" "+ unidad'></td>
+                                                    </tr>
+                                                    <!-- /ko -->
+                                                </tbody>
+                                                <thead>
+                                                    <tr>
+                                                        <th colspan="3">Panadería</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody data-bind="foreach: productos">
+                                                    <!-- ko if: type ==="panaderia" -->
+                                                    <tr>
+                                                        <td data-bind="text:title"></td>
+                                                        <td>
+                                                            <input type="number" data-bind="value:remain,event: { blur: $parent.calculateTotal.bind($data) }" />
+                                                        </td>
+                                                        <td data-bind='text:total() +" "+ unidad'></td>
+                                                    </tr>
+                                                    <!-- /ko -->
+                                                </tbody>
+                                                <thead>
+                                                    <tr>
+                                                        <th colspan="3">Huevos y Lácteos</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody data-bind="foreach: productos">
+                                                    <!-- ko if: type ==="lacteos" -->
+                                                    <tr>
+                                                        <td data-bind="text:title"></td>
+                                                        <td>
+                                                            <input type="number" data-bind="value:remain,event: { blur: $parent.calculateTotal.bind($data) }" />
+                                                        </td>
+                                                        <td data-bind='text:total() +" "+ unidad'></td>
+                                                    </tr>
+                                                    <!-- /ko -->
+                                                </tbody>
+                                                <thead>
+                                                    <tr>
+                                                        <th colspan="3">Carnes</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody data-bind="foreach: productos">
+                                                    <!-- ko if: type ==="carnes" -->
+                                                    <tr>
+                                                        <td data-bind="text:title"></td>
+                                                        <td>
+                                                            <input type="number" data-bind="value:remain,event: { blur: $parent.calculateTotal.bind($data) }" />
+                                                        </td>
+                                                        <td data-bind='text:total() +" "+ unidad'></td>
+                                                    </tr>
+                                                    <!-- /ko -->
+                                                </tbody>
+                                                <thead>
+                                                    <tr>
+                                                        <th colspan="3">Frutas y Verduras</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody data-bind="foreach: productos">
+                                                    <!-- ko if: type ==="fruver" -->
+                                                    <tr>
+                                                        <td data-bind="text:title"></td>
+                                                        <td>
+                                                            <input type="number" data-bind="value:remain,event: { blur: $parent.calculateTotal.bind($data) }" />
+                                                        </td>
+                                                        <td data-bind='text:total() +" "+ unidad'></td>
+                                                    </tr>
+                                                    <!-- /ko -->
+                                                </tbody>
+                                            </tbody>
+                                        </table>
+                                        <div class="text-center">
+                                            <nav aria-label="Page navigation">
+                                                <ul class="pagination">
+                                                    <li>
+                                                        <button class="btn btn-info btn-fill" data-bind="click: function() { prepararPedido() }">
+                                                            Preparar pedido
+                                                        </button>
+                                                    </li>
+                                                </ul>
+                                            </nav>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" data-bind="visible:showTableProds()">
+                        <div class="col-md-12">
+                            <div class="card ">
+                                <div class="content">
+                                    <div class="table-full-width">
+                                        <table class="table" id="pedidoTableGenerate" border="1">
+                                            <thead>
+                                                <tr>
+                                                    <th colspan="2">Producto</th>
+                                                    <th colspan="2">Pedido</th>
+                                                    <th colspan="5">
+                                                      <img src="/static/img/funpaz.png" />
+                                                      <h4 class="title" data-dind="text:pedidoName()"></h4>
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <thead>
+                                                    <tr>
+                                                        <th colspan="2">Abarrotes</th>
+                                                        <th>Si</th>
+                                                        <th>No</th>
+                                                        <th>Cantidad Solicitada</th>
+                                                        <th>Cantidad Entregada</th>
+                                                        <th>Cantidad Pendiente</th>
+                                                        <th colspan="2">Observaciones</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody data-bind="foreach: productos">
+                                                    <!-- ko if: type ==="abarrotes" -->
+                                                    <tr>
+                                                      <td colspan="2" data-bind="text:title"></td>
+                                                      <td>X</td>
+                                                      <td></td>
+                                                      <td data-bind='text:total() +" "+ unidad'></td>
+                                                      <td></td>
+                                                      <td></td>
+                                                      <td colspan="2"></td>
+                                                    </tr>
+                                                    <!-- /ko -->
+                                                </tbody>
+                                                <thead>
+                                                    <tr>
+                                                        <th colspan="2">Panadería</th>
+                                                        <th>Si</th>
+                                                        <th>No</th>
+                                                        <th>Cantidad Solicitada</th>
+                                                        <th>Cantidad Entregada</th>
+                                                        <th>Cantidad Pendiente</th>
+                                                        <th colspan="2">Observaciones</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody data-bind="foreach: productos">
+                                                    <!-- ko if: type ==="panaderia" -->
+                                                    <tr>
+                                                      <td colspan="2" data-bind="text:title"></td>
+                                                      <td>X</td>
+                                                      <td></td>
+                                                      <td data-bind='text:total() +" "+ unidad'></td>
+                                                      <td></td>
+                                                      <td></td>
+                                                      <td colspan="2"></td>
+                                                    </tr>
+                                                    <!-- /ko -->
+                                                </tbody>
+                                                <thead>
+                                                    <tr>
+                                                        <th colspan="2">Huevos y Lácteos</th>
+                                                        <th>Si</th>
+                                                        <th>No</th>
+                                                        <th>Cantidad Solicitada</th>
+                                                        <th>Cantidad Entregada</th>
+                                                        <th>Cantidad Pendiente</th>
+                                                        <th colspan="2">Observaciones</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody data-bind="foreach: productos">
+                                                    <!-- ko if: type ==="lacteos" -->
+                                                    <tr>
+                                                      <td colspan="2" data-bind="text:title"></td>
+                                                      <td>X</td>
+                                                      <td></td>
+                                                      <td data-bind='text:total() +" "+ unidad'></td>
+                                                      <td></td>
+                                                      <td></td>
+                                                      <td colspan="2"></td>
+                                                    </tr>
+                                                    <!-- /ko -->
+                                                </tbody>
+                                                <thead>
+                                                    <tr>
+                                                        <th colspan="2">Carnes</th>
+                                                        <th>Si</th>
+                                                        <th>No</th>
+                                                        <th>Cantidad Solicitada</th>
+                                                        <th>Cantidad Entregada</th>
+                                                        <th>Cantidad Pendiente</th>
+                                                        <th colspan="2">Observaciones</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody data-bind="foreach: productos">
+                                                    <!-- ko if: type ==="carnes" -->
+                                                    <tr>
+                                                      <td colspan="2" data-bind="text:title"></td>
+                                                      <td>X</td>
+                                                      <td></td>
+                                                      <td data-bind='text:total() +" "+ unidad'></td>
+                                                      <td></td>
+                                                      <td></td>
+                                                      <td colspan="2"></td>
+                                                    </tr>
+                                                    <!-- /ko -->
+                                                </tbody>
+                                                <thead>
+                                                    <tr>
+                                                        <th colspan="2">Frutas y Verduras</th>
+                                                        <th>Si</th>
+                                                        <th>No</th>
+                                                        <th>Cantidad Solicitada</th>
+                                                        <th>Cantidad Entregada</th>
+                                                        <th>Cantidad Pendiente</th>
+                                                        <th colspan="2">Observaciones</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody data-bind="foreach: productos">
+                                                    <!-- ko if: type ==="fruver" -->
+                                                    <tr>
+                                                      <td colspan="2" data-bind="text:title"></td>
+                                                      <td>X</td>
+                                                      <td></td>
+                                                      <td data-bind='text:total() +" "+ unidad'></td>
+                                                      <td></td>
+                                                      <td></td>
+                                                      <td colspan="2"></td>
+                                                    </tr>
+                                                    <!-- /ko -->
+                                                </tbody>
+                                            </tbody>
+                                        </table>
+                                        <div class="text-center">
+                                            <nav aria-label="Page navigation">
+                                                <ul class="pagination">
+                                                    <li>
+                                                        <button class="btn btn-info btn-fill" data-bind="click: function() { download() }">
+                                                            Descargar excel
+                                                        </button>
+                                                    </li>
+                                                </ul>
+                                            </nav>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
+
+            <footer class="footer">
+                <div class="container-fluid">
+                    <p class="copyright pull-right">
+                        &copy; 2016, Made by Xavier Sarmiento. Thanks to <a href="http://www.creative-tim.com">Creative Tim</a>
+                    </p>
+                </div>
+            </footer>
+
         </div>
     </div>
-    <footer id="contact" class="page-footer default_color scrollspy">
-        <div class="footer-copyright default_color">
-            <div class="container">
-                Made by <a class="white-text">Xavier Sarmiento</a>. Thanks to <a class="white-text" href="http://materializecss.com/" target="_blank">materializecss</a>
-            </div>
-        </div>
-    </footer>
 
-    <!--  Scripts-->
-    <script src="/static/min/plugin-min.js"></script>
-    <script src="/static/min/custom-min.js"></script>
-    <script src="/static/min/jquery-3.1.1.min.js"></script>
-    <script src="/static/min/knockout-3.4.0.js"></script>
-    <script src="/static/app/pedidos.js"></script>
 </body>
+
+<!--   Core JS Files   -->
+<script src="/static/js/jquery-1.10.2.js" type="text/javascript"></script>
+<script src="/static/js/bootstrap.min.js" type="text/javascript"></script>
+
+
+<!-- Light Bootstrap Table Core javascript and methods for Demo purpose -->
+<script src="/static/js/light-bootstrap-dashboard.js"></script>
+
+<script src="/static/js/knockout-3.4.1.js"></script>
+
+<script src="/static/app/pedidos.js"></script>
 
 </html>
