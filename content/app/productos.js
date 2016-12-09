@@ -4,6 +4,7 @@ var ViewModel = function() {
     self.productos = ko.observableArray();
     self.productosFilter = ko.observableArray();
     self.isEditing = ko.observable(false);
+    self.userName = ko.observable();
     self.isloading = ko.observable(false);
     self.token = localStorage.getItem("token");
 
@@ -30,6 +31,7 @@ var ViewModel = function() {
         if (!self.token) {
             window.location.href = "/login";
         }
+        self.userName(localStorage.getItem("name"));
         getProductos();
     };
 
@@ -89,6 +91,7 @@ var ViewModel = function() {
 
     self.logout = function() {
         localStorage.removeItem("token");
+        localStorage.removeItem("name");
         window.location.href = "/login";
     };
 

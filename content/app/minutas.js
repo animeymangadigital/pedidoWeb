@@ -3,6 +3,7 @@ var ViewModel = function() {
     self.minutas = ko.observableArray();
     self.ciclos = ko.observableArray();
     self.isEditing = ko.observable(false);
+    self.userName = ko.observable();
     self.isloading = ko.observable(false);
     self.minutaName = ko.observable();
     self.minutaId = ko.observable();
@@ -17,11 +18,13 @@ var ViewModel = function() {
         if (!self.token) {
             window.location.href = "/login";
         }
+        self.userName(localStorage.getItem("name"));
         getMinutas();
     };
 
     self.logout = function() {
         localStorage.removeItem("token");
+        localStorage.removeItem("name");
         window.location.href = "/login";
     };
 

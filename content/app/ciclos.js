@@ -3,6 +3,7 @@ var ViewModel = function() {
     self.ciclos = ko.observableArray();
     self.isEditing = ko.observable(false);
     self.isloading = ko.observable(false);
+    self.userName = ko.observable();
     self.cicloNameExcel = ko.observable();
     self.cicloName = ko.observable();
     self.cicloId = ko.observable();
@@ -15,11 +16,13 @@ var ViewModel = function() {
         if (!self.token) {
             window.location.href = "/login";
         }
+        self.userName(localStorage.getItem("name"));
         getCiclos();
     };
 
     self.logout = function() {
         localStorage.removeItem("token");
+        localStorage.removeItem("name");
         window.location.href = "/login";
     };
 

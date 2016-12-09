@@ -17,6 +17,7 @@ var ViewModel = function() {
           data:data
       }).done(function(result) {
         localStorage.setItem('token', result.token);
+        localStorage.setItem('name', result.name);
         window.location.href = "/";
       }).fail(function(err){
         alert(err.responseJSON.message);

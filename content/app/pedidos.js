@@ -3,6 +3,7 @@ var ViewModel = function() {
     self.ciclos = ko.observableArray();
     self.productos = ko.observableArray();
     self.isloading = ko.observable(false);
+    self.userName = ko.observable();
     self.showProds = ko.observable(false);
     self.showTableProds = ko.observable(false);
     self.hideList = ko.computed(function() {
@@ -21,11 +22,13 @@ var ViewModel = function() {
         if (!self.token) {
             window.location.href = "/login";
         }
+        self.userName(localStorage.getItem("name"));
         getCiclos();
     };
 
     self.logout = function() {
         localStorage.removeItem("token");
+        localStorage.removeItem("name");
         window.location.href = "/login";
     };
 

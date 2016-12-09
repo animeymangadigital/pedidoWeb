@@ -95,9 +95,7 @@
                     <div class="collapse navbar-collapse">
                         <ul class="nav navbar-nav navbar-right">
                             <li>
-                                <a href="">
-                               Xavier Sarmiento
-                            </a>
+                                <span data-bind="text:userName"></span>
                             </li>
                             <li>
                                 <a href="#" data-bind="click: function() { logout() }">
@@ -142,7 +140,7 @@
                                             </div>
                                         </div>
                                         <button type="submit" class="btn btn-info btn-fill" data-bind="click: function() { calcular() }">
-                                          Calcular <i class="fa fa-spinner" data-bind="visible:isloading()"></i>
+                                            Calcular <i class="fa fa-spinner" data-bind="visible:isloading()"></i>
                                         </button>
                                         <button type="submit" class="btn btn-default btn-fill" data-bind="click: function() { cancel() }">Cancelar</button>
                                         <div class="clearfix"></div>

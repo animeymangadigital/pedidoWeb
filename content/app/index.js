@@ -1,14 +1,18 @@
 var ViewModel = function() {
     var self = this;
+    self.userName = ko.observable();
+
     self.init = function() {
-       var token = localStorage.getItem("token");
-       if(!token){
-         window.location.href = "/login";
-       }
+        var token = localStorage.getItem("token");
+        if (!token) {
+            window.location.href = "/login";
+        }
+        self.userName(localStorage.getItem("name"));
     };
     self.logout = function() {
-       localStorage.removeItem("token");
-       window.location.href = "/login";
+        localStorage.removeItem("token");
+        localStorage.removeItem("name");
+        window.location.href = "/login";
     };
     self.init();
 };
