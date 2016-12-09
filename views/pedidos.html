@@ -141,7 +141,9 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <button type="submit" class="btn btn-info btn-fill" data-bind="click: function() { calcular() }">Calcular</button>
+                                        <button type="submit" class="btn btn-info btn-fill" data-bind="click: function() { calcular() }">
+                                          Calcular <i class="fa fa-spinner" data-bind="visible:isloading()"></i>
+                                        </button>
                                         <button type="submit" class="btn btn-default btn-fill" data-bind="click: function() { cancel() }">Cancelar</button>
                                         <div class="clearfix"></div>
                                     </form>
@@ -316,7 +318,7 @@
                                                 <ul class="pagination">
                                                     <li>
                                                         <button class="btn btn-info btn-fill" data-bind="click: function() { prepararPedido() }">
-                                                            Preparar pedido
+                                                            Preparar pedido <i class="fa fa-spinner" data-bind="visible:isloading()"></i>
                                                         </button>
                                                     </li>
                                                 </ul>
@@ -476,7 +478,7 @@
                                                 <ul class="pagination">
                                                     <li>
                                                         <button class="btn btn-info btn-fill" data-bind="click: function() { download() }">
-                                                            Descargar excel
+                                                            Descargar excel <i class="fa fa-spinner" data-bind="visible:isloading()"></i>
                                                         </button>
                                                     </li>
                                                 </ul>

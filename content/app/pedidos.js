@@ -32,6 +32,7 @@ var ViewModel = function() {
     self.prepararPedido = function() {
         self.showTableProds(true);
         self.showProds(false);
+        self.isloading(true);
 
         var monthNames = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
             "Julio", "Agosto", "Septiembre", "Octobre", "Noviembre", "Diciembre"
@@ -43,8 +44,11 @@ var ViewModel = function() {
         var year = date.getFullYear();
         self.pedidoName('Pedido del ' + day + ' Al ' + (day + 7) + ' De ' + month + ' Del ' + year);
         self.titleForExcel(getTitleForExcel());
+        self.isloading(false);
     };
+
     self.download = function() {
+        self.isloading(true);
         //Creamos un Elemento Temporal en forma de enlace
         var tmpElemento = document.createElement('a');
         // obtenemos la información desde el div que lo contiene en el html
@@ -64,6 +68,7 @@ var ViewModel = function() {
         tmpElemento.download = 'pedido-' + [day, month, year].join('-') + '.xls';
         // Simulamos el click al elemento creado para descargarlo
         tmpElemento.click();
+        self.isloading(false);
     };
 
     function getTitleForExcel() {
