@@ -47,9 +47,9 @@ var ViewModel = function() {
         var tmpElemento = document.createElement('a');
         // obtenemos la información desde el div que lo contiene en el html
         // Obtenemos la información de la tabla
-        var data_type = 'data:application/vnd.ms-excel';
+        var data_type = 'data:application/vnd.ms-excel;';
         var tabla_div = document.getElementById('pedidoTableGenerate');
-        var tabla_html = tabla_div.outerHTML.replace(/ /g, '%20');
+        var tabla_html = tabla_div.outerHTML.replace(/ /g, '%20').replace(/á/g, "&#225;").replace(/é/g, "&#233;").replace(/í/g, "&#237;").replace(/ó/g, "&#243;").replace(/ú/g, "&#250;").replace(/ñ/g, "&#241;");
         tmpElemento.href = data_type + ', ' + tabla_html;
         //Asignamos el nombre a nuestro EXCEL
         var date = new Date();
@@ -63,6 +63,10 @@ var ViewModel = function() {
         // Simulamos el click al elemento creado para descargarlo
         tmpElemento.click();
     };
+
+    function htmlEncode(value) {
+        return $('<div/>').text(value).html();
+    }
 
     self.calculateTotal = function(data) {
         var reamin = data.remain() === undefined ? 0 : data.remain();

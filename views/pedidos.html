@@ -1,8 +1,8 @@
 <!doctype html>
-<html lang="en">
+<html>
 
 <head>
-    <meta charset="utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <link rel="icon" type="image/png" href="assets/img/favicon.ico">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 
@@ -27,8 +27,8 @@
 
 
     <!--     Fonts and icons     -->
-    <link href="/static/css/font-awesome.min.css" rel="stylesheet">
-    <link href='/static/css/css.css' rel='stylesheet' type='text/css'>
+    <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href='http://fonts.googleapis.com/css?family=Roboto:400,700,300' rel='stylesheet' type='text/css'>
     <link href="/static/css/pe-icon-7-stroke.css" rel="stylesheet" />
 
 </head>
@@ -337,9 +337,14 @@
                                                 <tr>
                                                     <th colspan="2">Producto</th>
                                                     <th colspan="2">Pedido</th>
-                                                    <th colspan="5">
-                                                      <img src="/static/img/funpaz.png" />
-                                                      <h4 class="title" data-dind="text:pedidoName()"></h4>
+                                                    <th colspan="1" class="text-center" style="height: 70px;">
+                                                        <img src="https://orderfoodciclosweb.herokuapp.com/img/funpaz.png" />
+                                                    </th>
+                                                    <th colspan="3">
+                                                        <span class="title" data-bind="text: pedidoName"></span>
+                                                    </th>
+                                                    <th>
+                                                        Semana 1
                                                     </th>
                                                 </tr>
                                             </thead>
@@ -358,13 +363,13 @@
                                                 <tbody data-bind="foreach: productos">
                                                     <!-- ko if: type ==="abarrotes" -->
                                                     <tr>
-                                                      <td colspan="2" data-bind="text:title"></td>
-                                                      <td>X</td>
-                                                      <td></td>
-                                                      <td data-bind='text:total() +" "+ unidad'></td>
-                                                      <td></td>
-                                                      <td></td>
-                                                      <td colspan="2"></td>
+                                                        <td colspan="2" data-bind="text:title"></td>
+                                                        <td>X</td>
+                                                        <td></td>
+                                                        <td data-bind='text:total() +" "+ unidad'></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td colspan="2"></td>
                                                     </tr>
                                                     <!-- /ko -->
                                                 </tbody>
@@ -382,13 +387,13 @@
                                                 <tbody data-bind="foreach: productos">
                                                     <!-- ko if: type ==="panaderia" -->
                                                     <tr>
-                                                      <td colspan="2" data-bind="text:title"></td>
-                                                      <td>X</td>
-                                                      <td></td>
-                                                      <td data-bind='text:total() +" "+ unidad'></td>
-                                                      <td></td>
-                                                      <td></td>
-                                                      <td colspan="2"></td>
+                                                        <td colspan="2" data-bind="text:title"></td>
+                                                        <td>X</td>
+                                                        <td></td>
+                                                        <td data-bind='text:total() +" "+ unidad'></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td colspan="2"></td>
                                                     </tr>
                                                     <!-- /ko -->
                                                 </tbody>
@@ -406,13 +411,13 @@
                                                 <tbody data-bind="foreach: productos">
                                                     <!-- ko if: type ==="lacteos" -->
                                                     <tr>
-                                                      <td colspan="2" data-bind="text:title"></td>
-                                                      <td>X</td>
-                                                      <td></td>
-                                                      <td data-bind='text:total() +" "+ unidad'></td>
-                                                      <td></td>
-                                                      <td></td>
-                                                      <td colspan="2"></td>
+                                                        <td colspan="2" data-bind="text:title"></td>
+                                                        <td>X</td>
+                                                        <td></td>
+                                                        <td data-bind='text:total() +" "+ unidad'></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td colspan="2"></td>
                                                     </tr>
                                                     <!-- /ko -->
                                                 </tbody>
@@ -430,13 +435,13 @@
                                                 <tbody data-bind="foreach: productos">
                                                     <!-- ko if: type ==="carnes" -->
                                                     <tr>
-                                                      <td colspan="2" data-bind="text:title"></td>
-                                                      <td>X</td>
-                                                      <td></td>
-                                                      <td data-bind='text:total() +" "+ unidad'></td>
-                                                      <td></td>
-                                                      <td></td>
-                                                      <td colspan="2"></td>
+                                                        <td colspan="2" data-bind="text:title"></td>
+                                                        <td>X</td>
+                                                        <td></td>
+                                                        <td data-bind='text:total() +" "+ unidad'></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td colspan="2"></td>
                                                     </tr>
                                                     <!-- /ko -->
                                                 </tbody>
@@ -454,13 +459,13 @@
                                                 <tbody data-bind="foreach: productos">
                                                     <!-- ko if: type ==="fruver" -->
                                                     <tr>
-                                                      <td colspan="2" data-bind="text:title"></td>
-                                                      <td>X</td>
-                                                      <td></td>
-                                                      <td data-bind='text:total() +" "+ unidad'></td>
-                                                      <td></td>
-                                                      <td></td>
-                                                      <td colspan="2"></td>
+                                                        <td colspan="2" data-bind="text:title"></td>
+                                                        <td>X</td>
+                                                        <td></td>
+                                                        <td data-bind='text:total() +" "+ unidad'></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td colspan="2"></td>
                                                     </tr>
                                                     <!-- /ko -->
                                                 </tbody>
