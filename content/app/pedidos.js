@@ -14,6 +14,7 @@ var ViewModel = function() {
     self.cicloId = ko.observable();
 
     self.pedidoName = ko.observable();
+    self.titleForExcel = ko.observable();
 
     self.token = localStorage.getItem("token");
     self.init = function() {
@@ -33,14 +34,15 @@ var ViewModel = function() {
         self.showProds(false);
 
         var monthNames = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
-                          "Julio", "Agosto", "Septiembre", "Octobre", "Noviembre", "Diciembre"];
+            "Julio", "Agosto", "Septiembre", "Octobre", "Noviembre", "Diciembre"
+        ];
 
         var date = new Date();
         var month = monthNames[date.getMonth()];
         var day = date.getDate();
         var year = date.getFullYear();
-        console.log('Pedido del ' + day + ' Al ' + (day + 7) + ' De ' + month + 'Del' + year);
         self.pedidoName('Pedido del ' + day + ' Al ' + (day + 7) + ' De ' + month + ' Del ' + year);
+        self.titleForExcel(getTitleForExcel());
     };
     self.download = function() {
         //Creamos un Elemento Temporal en forma de enlace
@@ -64,9 +66,14 @@ var ViewModel = function() {
         tmpElemento.click();
     };
 
-    function htmlEncode(value) {
-        return $('<div/>').text(value).html();
+    function getTitleForExcel() {
+        var ciclo = ko.utils.arrayFirst(self.ciclos(), function(item) {
+            return item._id === self.cicloId();
+        });
+
+        return ciclo ? ciclo.title_for_excel : '';
     }
+
 
     self.calculateTotal = function(data) {
         var reamin = data.remain() === undefined ? 0 : data.remain();
@@ -75,10 +82,10 @@ var ViewModel = function() {
     };
 
     self.cancel = function() {
-      self.de7a12(null);
-      self.de13a17(null);
-      self.de18a49(null);
-      self.cicloId(null);
+        self.de7a12(null);
+        self.de13a17(null);
+        self.de18a49(null);
+        self.cicloId(null);
     };
 
     self.calcular = function() {
@@ -87,7 +94,7 @@ var ViewModel = function() {
             type: 'POST',
             url: 'https://orderfoodciclos.herokuapp.com/pedidos',
             data: {
-                de7a12 : self.de7a12(),
+                de7a12: self.de7a12(),
                 de13a17: self.de13a17(),
                 de18a49: self.de18a49(),
                 cicloId: self.cicloId(),

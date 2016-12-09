@@ -128,6 +128,10 @@
                                                     <label>Nombre del ciclo</label>
                                                     <input type="text" class="form-control" data-bind="value: cicloName">
                                                 </div>
+                                                <div class="form-group">
+                                                    <label>Nombre del ciclo para el Excel</label>
+                                                    <input type="text" class="form-control" data-bind="value: cicloNameExcel">
+                                                </div>
                                             </div>
                                         </div>
                                         <button type="submit" class="btn btn-info btn-fill" data-bind="click: function() { goToSave() }">Guardar</button>
@@ -149,6 +153,7 @@
                                             <tbody data-bind="foreach: ciclos">
                                                 <tr>
                                                     <td><span data-bind="text:title"></span></td>
+                                                    <td><span data-bind="text:title_for_excel"></span></td>
                                                     <td class="td-actions text-right">
                                                         <button type="button" rel="tooltip" title="Editar ciclo" class="btn btn-info btn-simple" data-bind="click: function() { $parent.goToEdit($data) }">
                                                             <i class="fa fa-edit"></i>

@@ -3,6 +3,7 @@ var ViewModel = function() {
     self.ciclos = ko.observableArray();
     self.isEditing = ko.observable(false);
     self.isloading = ko.observable(false);
+    self.cicloNameExcel = ko.observable();
     self.cicloName = ko.observable();
     self.cicloId = ko.observable();
     self.token = localStorage.getItem("token");
@@ -23,14 +24,14 @@ var ViewModel = function() {
     };
 
     self.save = function() {
-      if(!self.cicloName()){
-          alert('No se puede crear un ciclo sin que le llenes el nombre');
+      if(!self.cicloName() || !self.cicloNameExcel()){
+          alert('No se puede crear un ciclo sin que le llenes los nombres');
           return;
       }
       return $.ajax({
           type: 'POST',
           url: 'https://orderfoodciclos.herokuapp.com/ciclos',
-          data:{title:self.cicloName()},
+          data:{title:self.cicloName(),titleForExcel:self.cicloNameExcel()},
           headers: {
               "Authorization": "Bearer " + self.token
           }
@@ -85,6 +86,7 @@ var ViewModel = function() {
       self.isEditing(false);
       self.isloading(false);
       self.cicloName(null);
+      self.cicloNameExcel(null);
       self.cicloId(null);
     };
 
@@ -92,6 +94,7 @@ var ViewModel = function() {
        self.isEditing(true);
        self.cicloId(data._id);
        self.cicloName(data.title);
+       self.cicloNameExcel(data.title_for_excel)
     };
 
     self.goToSave = function() {
@@ -103,14 +106,14 @@ var ViewModel = function() {
     };
 
     self.edit = function() {
-      if(!self.cicloName()){
-          alert('No se puede crear un ciclo sin que le llenes el nombre');
+      if(!self.cicloName() || !self.cicloNameExcel()){
+          alert('No se puede crear un ciclo sin que le llenes los nombres');
           return;
       }
       return $.ajax({
           type: 'PUT',
           url: 'https://orderfoodciclos.herokuapp.com/ciclos/' + self.cicloId(),
-          data:{title:self.cicloName()},
+          data:{title:self.cicloName(),titleForExcel:self.cicloNameExcel()},
           headers: {
               "Authorization": "Bearer " + self.token
           }
